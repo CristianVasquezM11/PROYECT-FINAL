@@ -1,0 +1,82 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2867
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww11520\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 // Variable de control para el bucle\
+var continuar = true;\
+\
+while (continuar) \{\
+  // Precio base de la cotizaci\'f3n\
+  var precio_base = 2000;\
+\
+  // Valores de los recargos\
+  var edad_18 = 0.1; // 10%\
+  var edad_25 = 0.2; // 20%\
+  var edad_50 = 0.3; // 30%\
+  var hijos_recargo = 0.2; // 20%\
+\
+  var recargo_total = 0;\
+\
+  // 1. Ingreso de nombre y opci\'f3n de salir\
+  var nombre = prompt("Ingrese su nombre o escriba 'SALIR' para terminar:");\
+\
+  if (!nombre || nombre.toUpperCase() === "SALIR") \{\
+    continuar = false;\
+    break; \
+  \}\
+\
+  // 2. Edad del asegurado\
+  var edad = prompt("\'bfCu\'e1ntos a\'f1os tiene " + nombre + "? (Solo n\'fameros)");\
+  var edad_numero = parseInt(edad);\
+\
+  if (isNaN(edad_numero) || edad_numero < 18) \{\
+    alert("Lo sentimos, debe ser mayor de 18 a\'f1os para cotizar.");\
+    continue; // Salta al inicio del bucle para una nueva cotizaci\'f3n\
+  \}\
+\
+  // L\'f3gica de recargo por edad del asegurado\
+  if (edad_numero >= 18 && edad_numero < 25) \{\
+    recargo_total += precio_base * edad_18;\
+  \} else if (edad_numero >= 25 && edad_numero < 50) \{\
+    recargo_total += precio_base * edad_25;\
+  \} else if (edad_numero >= 50) \{\
+    recargo_total += precio_base * edad_50;\
+  \}\
+\
+  // 3. Estado Civil y C\'f3nyuge\
+  var casado = prompt("\'bfEst\'e1 casado actualmente? (SI/NO)").toUpperCase();\
+  if (casado === "SI") \{\
+    var edad_conyuge = prompt("\'bfQu\'e9 edad tiene su esposo/a?");\
+    var edad_conyuge_num = parseInt(edad_conyuge);\
+\
+    if (!isNaN(edad_conyuge_num)) \{\
+      if (edad_conyuge_num >= 18 && edad_conyuge_num < 25) \{\
+        recargo_total += precio_base * edad_18;\
+      \} else if (edad_conyuge_num >= 25 && edad_conyuge_num < 50) \{\
+        recargo_total += precio_base * edad_25;\
+      \} else if (edad_conyuge_num >= 50) \{\
+        recargo_total += precio_base * edad_50;\
+      \}\
+    \}\
+  \}\
+\
+  // 4. Hijos\
+  var hijos = prompt("\'bfCu\'e1ntos hijos tiene?");\
+  var cantidad_hijos = parseInt(hijos);\
+  if (!isNaN(cantidad_hijos) && cantidad_hijos > 0) \{\
+    recargo_total += (precio_base * hijos_recargo) * cantidad_hijos;\
+  \}\
+\
+  // 5. Resultados\
+  var precio_final = precio_base + recargo_total;\
+\
+  alert("Resumen para: " + nombre + \
+        "\\nRecargo total: Q" + recargo_total + \
+        "\\nPrecio final: Q" + precio_final);\
+\}\
+\
+alert("Gracias por usar el sistema de cotizaciones.");\
+}
